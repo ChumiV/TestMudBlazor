@@ -1,30 +1,27 @@
-﻿@using MudBlazor
+@using MudBlazor
 @using TestMudBlazor.Interfaces
 @using TestMudBlazor.Models
 @inject ITestService _testService
 @inject IQuestionService _questionService
 
-    <MudThemeProvider />
+@if (_test != null)
+{
+    <h2 Color="Colors.Info">@_test.Title</h2>
 
-    @if (_test != null)
+    <div>
+        <MudPagination Rectangular="true" Color="Color.Dark" Variant="Variant.Outlined" @bind-Count="@_count" @bind-Selected="@_tempQuestion" />
+    </div>
+}
+
+@code {
+    private Test _test;
+    private int _tempQuestion = 1;
+    private int _count = 0;
+    
+    protected override void OnInitialized()
     {
-        <h2 Color="Colors.Info">@_test.Title</h2>
-
-        <div>
-
-            <MudPagination Rectangular="true" Color="Color.Dark" Variant="Variant.Outlined" @bind-Count="@_count" @bind-Selected="@_tempQuestion" />
-        </div>
+        _test = _testService.GetTest(0);
+        _test.Questions = _questionService.GetQuestions(_test.Id);
+        _count = _test.Questions.Count();
     }
-
-    @code {
-        private Test _test;
-        private int _tempQuestion = 1;
-        private int _count = 0;
-
-        protected override void OnInitialized()
-        {
-            _test = _testService.GetTest(0);
-            _test.Questions = _questionService.GetQuestions(_test.Id);
-            _count = _test.Questions.Count();
-        }
-    }
+}
