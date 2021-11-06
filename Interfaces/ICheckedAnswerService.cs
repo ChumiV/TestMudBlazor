@@ -8,6 +8,7 @@ namespace TestMudBlazor.Interfaces
 {
     interface ICheckedAnswerService
     {
+        int CountAnswers(int testId);
         CheckedAnswer GetCheckedAnswer(int questionId);
     }
 }

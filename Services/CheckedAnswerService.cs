@@ -9,6 +9,11 @@ namespace TestMudBlazor.Services
 {
     public class CheckedAnswerService : ICheckedAnswerService
     {
+        public int CountAnswers(int testId)
+        {
+            return 2;
+        }
+
         public CheckedAnswer GetCheckedAnswer(int questionId)
         {
             try

@@ -45,12 +45,12 @@
             }
         </MudCardContent>
         <MudCardActions>
+            <MudButton Class="col-md-3 myMenuButton" Variant="Variant.Filled" Color="Color.Primary" @bind-Disabled="@_testIsOver">Завершить тест</MudButton>
+            
             @if (_check != null && _selected < _length - 1)
             {
-                <MudButton Class="col-md-3 myMenuButton" Variant="Variant.Filled" Color="Color.Primary" @onclick="@nextQuestion">Далее</MudButton>
+            <MudButton Class="col-md-3 myMenuButton" Variant="Variant.Filled" Color="Color.Primary" @onclick="@nextQuestion">Далее</MudButton>
             }
-
-            <MudButton Class="col-md-3 myMenuButton" Variant="Variant.Filled" Color="Color.Primary">Завершить тест</MudButton>
         </MudCardActions>
     </MudCard>
 
@@ -64,6 +64,7 @@
     public int _length = 0;
     public int _selected = 0;
     public bool _answerIsWrong = false;
+    public bool _testIsOver = false;
 
     protected override void OnInitialized()
     {
@@ -84,6 +85,9 @@
         _question = _test.Questions[_selected - 1];
         _question.Answers = answerService.GetAnswers(_question.Id);
         _check = checkedService.GetCheckedAnswer(_question.Id);
+        
+        _testIsOver = _test.Questions.Count() != checkedService.CountAnswers(0);
+
         if (_check != null)
         {
             foreach (var item in _question.Answers)
