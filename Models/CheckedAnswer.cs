@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace TestMudBlazor.Models
 {
-    public class Answer
+    public class CheckedAnswer
     {
         public int Id { set; get; }
-        public string Title { set; get; }
-        public bool IsTrue { set; get; }
+        public int QuestuionId { set; get; }
+        public int AnswerId { set; get; }
     }
 }

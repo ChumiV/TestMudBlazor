@@ -6,8 +6,8 @@ using TestMudBlazor.Models;
 
 namespace TestMudBlazor.Interfaces
 {
-    interface ITestService
+    interface ICheckedAnswerService
     {
-         Test GetTest(int testId);
+        CheckedAnswer GetCheckedAnswer(int questionId);
     }
 }
