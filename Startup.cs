@@ -33,6 +33,7 @@ namespace TestMudBlazor
             services.AddTransient<ICheckedAnswerService, CheckedAnswerService>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<ITestService, TestService>();
+            services.AddTransient<IMyTableService, MyTableService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

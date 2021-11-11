@@ -1,0 +1,177 @@
+﻿@inject IMyTableService tableService
+
+@page "/table"
+
+
+<MudTable Items="@Elements" Hover="true" CanCancelEdit="true" HorizontalScrollbar="true"
+          CommitEditTooltip="Commit Edit" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Доставка</MudText>
+        <MudSpacer />
+        <MudButton @onclick="addRow">Добавить запись</MudButton>
+    </ToolBarContent>
+    <ColGroup>
+        <!--<col style="width:50px;" />
+        <col style="width:80px;" />
+        <col style="width:50%;" />
+        <col />
+        <col />
+        <col style="width:50px;" />-->
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>Number</MudTh>
+        <MudTh>Date</MudTh>
+        <MudTh>Fuel</MudTh>
+        <MudTh>Loading point</MudTh>
+        <MudTh>Transporter</MudTh>
+        <MudTh>Client</MudTh>
+        <MudTh>Delivery point</MudTh>
+        <MudTh>Price purchase</MudTh>
+        <MudTh>Price Sales</MudTh>
+        <MudTh>Costs</MudTh>
+        <MudTh>Volume</MudTh>
+        <MudTh>Revenue</MudTh>
+        <MudTh>Profit</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Number">@context.Number</MudTd>
+        <MudTd DataLabel="Date">@context.Date</MudTd>
+        <MudTd DataLabel="Fuel">@context.TypeOfFuel</MudTd>
+        <MudTd DataLabel="Loading point">@context.LoadingPoint</MudTd>
+        <MudTd DataLabel="Transporter">@context.Transporter</MudTd>
+        <MudTd DataLabel="Client">@context.Client</MudTd>
+        <MudTd DataLabel="Delivery point">@context.DeliveryPoint</MudTd>
+        <MudTd DataLabel="Price purchase">@context.PricePurchase</MudTd>
+        <MudTd DataLabel="Price sales">@context.PriceSales</MudTd>
+        <MudTd DataLabel="Costs">@context.Costs</MudTd>
+        <MudTd DataLabel="Volume">@context.Volume</MudTd>
+        <MudTd DataLabel="Revenue">@context.Revenue</MudTd>
+        <MudTd DataLabel="Profit">@context.Profit</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        @if (readOnly && context.Number < readOnlyRows)
+        {
+            <MudTd DataLabel="Number">@context.Number</MudTd>
+            <MudTd DataLabel="Date">@context.Date</MudTd>
+            <MudTd DataLabel="Fuel">@context.TypeOfFuel</MudTd>
+            <MudTd DataLabel="Loading point">@context.LoadingPoint</MudTd>
+            <MudTd DataLabel="Transporter">@context.Transporter</MudTd>
+            <MudTd DataLabel="Client">@context.Client</MudTd>
+            <MudTd DataLabel="Delivery point">@context.DeliveryPoint</MudTd>
+            <MudTd DataLabel="Price purchase">@context.PricePurchase</MudTd>
+            <MudTd DataLabel="Price sales">@context.PriceSales</MudTd>
+            <MudTd DataLabel="Costs">@context.Costs</MudTd>
+            <MudTd DataLabel="Volume">@context.Volume</MudTd>
+            <MudTd DataLabel="Revenue">@context.Revenue</MudTd>
+            <MudTd DataLabel="Profit">@context.Profit</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Number">@context.Number</MudTd>
+            <MudTd DataLabel="Date">
+                <MudTextField @bind-Value="@context.Date" Required />
+            </MudTd>
+            <MudTd DataLabel="Fuel">
+                <MudTextField @bind-Value="@context.TypeOfFuel" Required />
+            </MudTd>
+            <MudTd DataLabel="Loading point">
+                <MudTextField @bind-Value="@context.LoadingPoint" Required />
+            </MudTd>
+            <MudTd DataLabel="Transporter">
+                <MudTextField @bind-Value="@context.Transporter" Required />
+            </MudTd>
+            <MudTd DataLabel="Client">
+                <MudTextField @bind-Value="@context.Client" Required />
+            </MudTd>
+            <MudTd DataLabel=" Delivery point">
+                <MudTextField @bind-Value="@context.DeliveryPoint" Required />
+            </MudTd>
+            <MudTd DataLabel="Price purchase">
+                <MudNumericField @bind-Value="@context.PricePurchase" Required />
+            </MudTd>
+            <MudTd DataLabel="Price sales">
+                <MudNumericField @bind-Value="@context.PriceSales" Required />
+            </MudTd>
+            <MudTd DataLabel="Costs">
+                <MudNumericField @bind-Value="@context.Costs" Required />
+            </MudTd>
+            <MudTd DataLabel="Volume">
+                <MudNumericField @bind-Value="@context.Volume" Required />
+            </MudTd>
+            <MudTd DataLabel="Revenue">@context.Revenue</MudTd>
+            <MudTd DataLabel="Profit">@context.Profit</MudTd>
+        }
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+<MudSwitch @bind-Checked="readOnly" Color="Color.Primary">Ограничить редактирование</MudSwitch>
+
+@code {
+    private string searchString = "";
+
+    private int readOnlyRows = 3;
+    private bool readOnly = false;
+
+    private MyTable elementBeforeEdit;
+
+    private List<MyTable> Elements = new List<MyTable>();
+
+    protected override void OnInitialized()
+    {
+        Elements = tableService.GetTableData();
+    }
+
+    private void addRow()
+    {
+        Elements.Add(new MyTable { Number = Elements.Count()});
+    }
+
+    private void BackupItem(object element)
+    {
+        elementBeforeEdit = new()
+        {
+            Number = ((MyTable)element).Number,
+            Date = ((MyTable)element).Date,
+            TypeOfFuel = ((MyTable)element).TypeOfFuel,
+            LoadingPoint = ((MyTable)element).LoadingPoint,
+            Transporter = ((MyTable)element).Transporter,
+            Client = ((MyTable)element).Client,
+            DeliveryPoint = ((MyTable)element).DeliveryPoint,
+            PricePurchase = ((MyTable)element).PricePurchase,
+            PriceSales = ((MyTable)element).PriceSales,
+            Costs = ((MyTable)element).Costs,
+            Volume = ((MyTable)element).Volume
+        };
+    }
+
+    private void ResetItemToOriginalValues(object element)
+    {
+        ((MyTable)element).Number = elementBeforeEdit.Number;
+        ((MyTable)element).Date = elementBeforeEdit.Date;
+        ((MyTable)element).TypeOfFuel = elementBeforeEdit.TypeOfFuel;
+        ((MyTable)element).LoadingPoint = elementBeforeEdit.LoadingPoint;
+        ((MyTable)element).Transporter = elementBeforeEdit.Transporter;
+        ((MyTable)element).Client = elementBeforeEdit.Client;
+        ((MyTable)element).DeliveryPoint = elementBeforeEdit.DeliveryPoint;
+        ((MyTable)element).PricePurchase = elementBeforeEdit.PricePurchase;
+        ((MyTable)element).PriceSales = elementBeforeEdit.PriceSales;
+        ((MyTable)element).Costs = elementBeforeEdit.Costs;
+        ((MyTable)element).Volume = elementBeforeEdit.Volume;
+    }
+}
