@@ -1,17 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
-    <MudThemeProvider />
-    <MudDialogProvider />
-    <MudSnackbarProvider />
+<div class="page">
+    <div class="col-md-2">
+        <NavMenu />
+    </div>
 
-    <div class="page">
-        <div class="col-md-2">
-            <NavMenu />
-        </div>
-
-        <div class="col-md-10">
-            <div class="content px-4">
-                @Body
-            </div>
+    <div class="col-md-10">
+        <div class="content px-4">
+            @Body
         </div>
     </div>
+</div>
