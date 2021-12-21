@@ -1,0 +1,20 @@
+﻿@page "/login"
+
+<MudContainer Class="d-flex justify-center align-center">
+    <MudPaper Elevation="1" Class="pa-10" style="text-align:center">
+        <MudContainer Class="d-flex flex-column justify-center" style="width: 450px">
+            <MudText Typo="Typo.h5">Вход на платформу</MudText>
+            <MudTextField Label="Телефон" @bind-Value="loginText" Variant="Variant.Outlined"></MudTextField>
+            <MudTextField Label="Пароль" @bind-Value="passwordText" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
+            <MudCheckBox @bind-Checked="rememberCheck">Запомнить меня</MudCheckBox>
+            <MudButton Variant="Variant.Filled" Class="align-self-center mt-6" Color="Color.Primary">Войти</MudButton>
+        </MudContainer>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string loginText = "";
+    private string passwordText = "";
+    private bool rememberCheck = false;
+
+}
